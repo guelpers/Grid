@@ -2,6 +2,7 @@
 #include <Grid/Hadrons/Modules/MContraction/Meson.hpp>
 #include <Grid/Hadrons/Modules/MContraction/WeakHamiltonian.hpp>
 #include <Grid/Hadrons/Modules/MContraction/WeakHamiltonianNonEye.hpp>
+#include <Grid/Hadrons/Modules/MContraction/WeakMesonDecayKl2.hpp>
 #include <Grid/Hadrons/Modules/MContraction/DiscLoop.hpp>
 #include <Grid/Hadrons/Modules/MContraction/WeakNeutral4ptDisc.hpp>
 #include <Grid/Hadrons/Modules/MContraction/Gamma3pt.hpp>
@@ -12,6 +13,7 @@
 #include <Grid/Hadrons/Modules/MSource/SeqGamma.hpp>
 #include <Grid/Hadrons/Modules/MSource/Point.hpp>
 #include <Grid/Hadrons/Modules/MSource/Wall.hpp>
+#include <Grid/Hadrons/Modules/MSource/Wall5d.hpp>
 #include <Grid/Hadrons/Modules/MSource/Z2.hpp>
 #include <Grid/Hadrons/Modules/MSource/SeqConserved.hpp>
 #include <Grid/Hadrons/Modules/MSink/Smear.hpp>

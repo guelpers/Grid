@@ -4,6 +4,7 @@ modules_cc =\
   Modules/MContraction/Meson.cc \
   Modules/MContraction/WeakNeutral4ptDisc.cc \
   Modules/MContraction/WeakHamiltonianNonEye.cc \
+  Modules/MContraction/WeakMesonDecayKl2.cc \
   Modules/MContraction/WardIdentity.cc \
   Modules/MContraction/DiscLoop.cc \
   Modules/MContraction/Gamma3pt.cc \
@@ -11,6 +12,7 @@ modules_cc =\
   Modules/MFermion/GaugeProp.cc \
   Modules/MSource/Point.cc \
   Modules/MSource/Wall.cc \
+  Modules/MSource/Wall5d.cc \
   Modules/MSource/SeqConserved.cc \
   Modules/MSource/SeqGamma.cc \
   Modules/MSource/Z2.cc \
@@ -56,6 +58,7 @@ modules_hpp =\
   Modules/MContraction/Meson.hpp \
   Modules/MContraction/WeakHamiltonian.hpp \
   Modules/MContraction/WeakHamiltonianNonEye.hpp \
+  Modules/MContraction/WeakMesonDecayKl2.hpp \
   Modules/MContraction/DiscLoop.hpp \
   Modules/MContraction/WeakNeutral4ptDisc.hpp \
   Modules/MContraction/Gamma3pt.hpp \
@@ -66,6 +69,7 @@ modules_hpp =\
   Modules/MSource/SeqGamma.hpp \
   Modules/MSource/Point.hpp \
   Modules/MSource/Wall.hpp \
+  Modules/MSource/Wall5d.hpp \
   Modules/MSource/Z2.hpp \
   Modules/MSource/SeqConserved.hpp \
   Modules/MSink/Smear.hpp \
