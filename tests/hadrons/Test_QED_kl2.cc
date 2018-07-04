@@ -48,8 +48,24 @@ int main(int argc, char *argv[])
     Application              application;
     std::vector<std::string> flavour = {"h"}; //{"l", "s", "c1", "c2", "c3"};
     std::vector<double>      mass    = {.2}; //{.01, .04, .2  , .25 , .3  };
+
+    //lepton parameters
     std::vector<std::string> lepton_flavour    = {"mu"};
     std::vector<double>      lepton_mass    = {.2};
+    std::vector<std::string> lepton_twist = {"0.0 0.0 0.0 0.5"};
+
+    std::vector<double>      lepton_energy (lepton_flavour.size(),.0);
+    std::vector<Real> tw;
+    for (unsigned int i = 0; i < lepton_mass.size(); ++i)
+    {
+        tw  = strToVec<Real>(lepton_twist[i]);
+        lepton_energy[i] = lepton_mass[i]*lepton_mass[i];
+	for(unsigned int mu = 0; mu < 3; mu++){
+	    lepton_energy[i] += 2*M_PI*tw[mu]*2*M_PI*tw[mu]/(GridDefaultLatt()[mu]*GridDefaultLatt()[mu]);
+	}
+	lepton_energy[i] = std::sqrt(lepton_energy[i]);
+    }
+
 
     unsigned int  nt    = GridDefaultLatt()[Tp];
     
@@ -86,19 +102,18 @@ int main(int argc, char *argv[])
 
 
 
-    // Wall source for lepton
-    MSource::Wall5d::Par wallPar;
-    wallPar.tW = 4;//26;
-    wallPar.mom       = "0. 0. 0. 0.";
-    wallPar.fiveD = true;
-    wallPar.Ls = 8;
-    application.createModule<MSource::Wall5d>("wall", wallPar);
-
-
-
-
     for (unsigned int i = 0; i < lepton_mass.size(); ++i)
     {
+
+        // Wall source for lepton
+        MSource::Wall5d::Par wallPar;
+        wallPar.mom       = "0. 0. 0. 0.";
+        wallPar.energy = lepton_energy[i];
+        wallPar.fiveD = true;
+        wallPar.Ls = 8;
+        application.createModule<MSource::Wall5d>("wall" + lepton_flavour[i], wallPar);
+
+
         // actions
         MAction::DWF::Par actionPar_lep;
         actionPar_lep.gauge = "free_gauge";
@@ -110,7 +125,7 @@ int main(int argc, char *argv[])
 
 
     	MSource::SeqConserved::Par seqKl2Par;
-    	seqKl2Par.q         = "wall";
+	seqKl2Par.q         = "wall" + lepton_flavour[i];
     	seqKl2Par.action    = "free_DWF_" + lepton_flavour[i]; 
     	seqKl2Par.tA        = 0;
     	seqKl2Par.tB        = nt-1;
@@ -119,15 +134,15 @@ int main(int argc, char *argv[])
     	seqKl2Par.mu_max	   = 3;
     	seqKl2Par.mom       = "0. 0. 0. 0.";
     	seqKl2Par.photon	   = "ph_field";
-    	application.createModule<MSource::SeqConserved>("VA",seqKl2Par);
+	application.createModule<MSource::SeqConserved>("VA" + lepton_flavour[i],seqKl2Par);
 
 
 
     	// free propagators
     	MFermion::FreeProp::Par freeKl2Par;
-    	freeKl2Par.source = "VA";
+	freeKl2Par.source = "VA" + lepton_flavour[i];
     	freeKl2Par.action = "free_DWF_" + lepton_flavour[i]; 
-    	freeKl2Par.twist = "0 0 0 0.5";
+	freeKl2Par.twist = lepton_twist[i];
     	freeKl2Par.mass = lepton_mass[i];
     	application.createModule<MFermion::FreeProp>("VA_" + lepton_flavour[i],
 							 freeKl2Par);
@@ -195,8 +210,6 @@ int main(int argc, char *argv[])
 
 
 //LATER: LOOP OVER QUARK/LEPTON FLAVOURS
-
-
     //Kl2 hadron contraction
     MContraction::WeakMesonDecayKl2::Par kl2Par;
     kl2Par.q1      = "Qpt_" + flavour[0] + "_seq_V_ph_" + flavour[0];
@@ -206,8 +219,6 @@ int main(int argc, char *argv[])
     kl2Par.output  = "QED_mat_test/weakdecay_" + flavour[0] + flavour[0] + "_to_"  + lepton_flavour[0];
     application.createModule<MContraction::WeakMesonDecayKl2>("final",
                                                       kl2Par);
-
-
 
     
     // execution

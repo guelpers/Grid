@@ -59,8 +59,8 @@ class Wall5dPar: Serializable
 {
 public:
     GRID_SERIALIZABLE_CLASS_MEMBERS(Wall5dPar,
-                                    unsigned int, tW,
                                     std::string, mom,
+				    double, energy,
                                     bool, fiveD,
 				    int, Ls);
 };
@@ -141,8 +141,8 @@ if (par().fiveD) Ls_ = par().Ls; //env().getObjectLs(par().solver);
 template <typename FImpl>
 void TWall5d<FImpl>::execute(void)
 {    
-    LOG(Message) << "Generating Wall5d source at t = " << par().tW 
-                 << " with momentum " << par().mom << std::endl;
+    LOG(Message) << "Generating Wall5d source at all t"
+                 << " with momentum " << par().mom << " and energy phase " << par().energy << std::endl;
     
     auto  &src = envGet(PropagatorField, getName());
 //    auto  &ph  = envGet(LatticeComplex, momphName_);
@@ -176,9 +176,11 @@ void TWall5d<FImpl>::execute(void)
 
 
     fourdsrc = 1.;
-    fourdsrc = where((t == par().tW), fourdsrc*ph, 0.*fourdsrc);
+    ph = zero;
+    LatticeCoordinate(coor, Tp);
+    ph = ph + par().energy*coor;
 
-
+    fourdsrc = fourdsrc * exp(ph);
 
     for(unsigned int s=0; s< Ls_; ++s){
 	InsertSlice(fourdsrc, src, s, 0);

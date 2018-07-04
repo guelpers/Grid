@@ -200,11 +200,6 @@ void TWeakMesonDecayKl2<FImpl>::execute(void)
 	result[i].spinidx1 = s1;
         result[i].spinidx2 = s2;
 
-
-//LOG(Message) << result[i].spinidx1 << std::endl;
-//LOG(Message) << result[i].spinidx2 << std::endl;
-//LOG(Message) << result[i].corr << std::endl;
-
 	i+=1;
     }
 
