@@ -64,7 +64,8 @@ public:
                                     unsigned int,   tA,
                                     unsigned int,   tB,
                                     Gamma::Algebra, gamma,
-                                    std::string,    mom);
+                                    std::string,    mom,
+                                    std::string,  photon);
 };
 
 template <typename FImpl>
@@ -72,6 +73,8 @@ class TSeqGamma: public Module<SeqGammaPar>
 {
 public:
     FGS_TYPE_ALIASES(FImpl,);
+public:
+    typedef PhotonR::GaugeField     EmField;
 public:
     // constructor
     TSeqGamma(const std::string name);
@@ -108,6 +111,7 @@ template <typename FImpl>
 std::vector<std::string> TSeqGamma<FImpl>::getInput(void)
 {
     std::vector<std::string> in = {par().q};
+    if (!par().photon.empty()) in.push_back(par().photon);
     
     return in;
 }
@@ -145,7 +149,7 @@ void TSeqGamma<FImpl>::execute(void)
                      << " sequential source for "
                      << par().tA << " <= t <= " << par().tB << std::endl;
     }
-    auto  &src = envGet(PropagatorField, getName());
+    auto  &src = envGet(PropagatorField, getName());  src=zero;
     auto  &q   = envGet(PropagatorField, par().q);
     auto  &ph  = envGet(LatticeComplex, momphName_);
     auto  &t   = envGet(Lattice<iScalar<vInteger>>, tName_);
@@ -168,7 +172,21 @@ void TSeqGamma<FImpl>::execute(void)
         LatticeCoordinate(t, Tp);
         hasPhase_ = true;
     }
-    src = where((t >= par().tA) and (t <= par().tB), ph*(g*q), 0.*q);
+
+    if (!par().photon.empty())    	
+    {   //not ideal, since the gamma in the input is not needed here, we only need gmu summed. Maybe write a new module
+	LOG(Message) << "Inserting the stochastic photon field " << par().photon << " and gmu, summing over mu" << std::endl;
+	auto &stoch_photon = envGet(EmField,  par().photon);
+	for(unsigned int mu=0;mu<=3;mu++)
+	{
+		Gamma gmu(Gamma::gmu[mu]);
+		src = src + where((t >= par().tA) and (t <= par().tB), PeekIndex<LorentzIndex>(stoch_photon, mu) *ph*(gmu*q), 0.*q);
+	}
+    } 	
+    else
+    {	
+    	src = where((t >= par().tA) and (t <= par().tB), ph*(g*q), 0.*q);
+    }
 }
 
 END_MODULE_NAMESPACE
