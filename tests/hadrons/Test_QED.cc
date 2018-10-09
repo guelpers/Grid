@@ -182,6 +182,48 @@ int main(int argc, char *argv[])
 
 
 
+
+	//seq sources with local vector and photon insertion
+        MSource::SeqAslash::Par seqPar_lV;
+        seqPar_lV.q         = "Qpt_" + flavour[i];
+        seqPar_lV.tA        = 0;
+        seqPar_lV.tB        = nt-1;
+        seqPar_lV.photon    = "ph_field";
+        seqPar_lV.mom       = "0. 0. 0. 0.";
+        application.createModule<MSource::SeqAslash>("Qpt_" + flavour[i] 
+						    + "_seq_lV_ph", seqPar_lV);
+        // seq propagator with local vector and photon insertion
+        MFermion::GaugeProp::Par quarkPar_seq_lV;
+        quarkPar_seq_lV.solver = "CG_" + flavour[i];
+        quarkPar_seq_lV.source = "Qpt_" + flavour[i] + "_seq_lV_ph";
+        application.createModule<MFermion::GaugeProp>("Qpt_" + flavour[i] 
+						+ "_seq_lV_ph_" + flavour[i], 
+							quarkPar_seq_lV);
+
+
+	//double seq sources with local vector and photon insertion
+	//(for self energy)
+        MSource::SeqAslash::Par seqPar_lVlV;
+        seqPar_lVlV.q         = "Qpt_" + flavour[i] + "_seq_lV_ph_" + flavour[i];
+        seqPar_lVlV.tA        = 0;
+        seqPar_lVlV.tB        = nt-1;
+        seqPar_lVlV.mom       = "0. 0. 0. 0.";
+	seqPar_lVlV.photon    = "ph_field";
+        application.createModule<MSource::SeqAslash>("Qpt_" + flavour[i] 
+						+ "_seq_lV_ph" + flavour[i] 
+						+ "_seq_lV_ph", seqPar_lVlV);
+        //double seq propagator with local vector and photon insertion
+        MFermion::GaugeProp::Par quarkPar_seq_lVlV;
+        quarkPar_seq_lVlV.solver = "CG_" + flavour[i];
+        quarkPar_seq_lVlV.source = "Qpt_" + flavour[i] + "_seq_lV_ph" 
+						+ flavour[i] + "_seq_lV_ph";
+        application.createModule<MFermion::GaugeProp>("Qpt_" + flavour[i] 
+						+ "_seq_lV_ph_" + flavour[i] 
+						+ "_seq_lV_ph_" + flavour[i], 
+							quarkPar_seq_lVlV);
+
+
+
     }
     for (unsigned int i = 0; i < flavour.size(); ++i)
     for (unsigned int j = i; j < flavour.size(); ++j)
@@ -245,6 +287,39 @@ int main(int argc, char *argv[])
 						    + flavour[i] + "_seq_V_ph_" 
 						    + flavour[i] + flavour[j],
                                                        mesPar_seq_S);
+
+
+        //local currents photon exchange contraction
+        MContraction::Meson::Par mesPar_seq_lE;
+        mesPar_seq_lE.output  = "QED/l_exchange_pt_" + flavour[i] + "_V_ph_" 
+				+ flavour[i] + "__" + flavour[j] + "_V_ph_"
+				+ flavour[j];
+        mesPar_seq_lE.q1      = "Qpt_" + flavour[i] + "_seq_lV_ph_" + flavour[i];
+        mesPar_seq_lE.q2      = "Qpt_" + flavour[j] + "_seq_lV_ph_" + flavour[j];
+        mesPar_seq_lE.gammas  = "(Gamma5 Gamma5)";
+        mesPar_seq_lE.sink    = "sink";
+        application.createModule<MContraction::Meson>("meson_exchange_pt_" 
+					+ flavour[i] + "_seq_lV_ph_" + flavour[i] 
+					+ flavour[j] + "_seq_lV_ph_" + flavour[j],
+                                                      mesPar_seq_lE);
+
+
+
+        //local currents self energy contraction
+        MContraction::Meson::Par mesPar_seq_lS;
+        mesPar_seq_lS.output  = "QED/l_selfenergy_pt_" + flavour[i] + "_V_ph_" 
+				+ flavour[i] + "_V_ph_" + flavour[i] + "__" 
+				+  flavour[j];
+        mesPar_seq_lS.q1      = "Qpt_" + flavour[i] + "_seq_lV_ph_" + flavour[i] 
+				+ "_seq_lV_ph_" + flavour[i];
+        mesPar_seq_lS.q2      = "Qpt_" + flavour[j];
+        mesPar_seq_lS.gammas  = "(Gamma5 Gamma5)";
+        mesPar_seq_lS.sink    = "sink";
+        application.createModule<MContraction::Meson>("meson_selfenergy_pt_" 
+						    + flavour[i] + "_seq_lV_ph_" 
+						    + flavour[i] + "_seq_lV_ph_" 
+						    + flavour[i] + flavour[j],
+                                                       mesPar_seq_lS);
 
     }
 
