@@ -8,6 +8,7 @@ Copyright (C) 2015-2018
 
 Author: Antonin Portelli <antonin.portelli@me.com>
 Author: Lanny91 <andrew.lawson@gmail.com>
+Author: Vera Guelpers    <Vera.Guelpers@ed.ac.uk>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -119,6 +120,9 @@ template <typename FImpl>
 void TWall<FImpl>::setup(void)
 {
     envCreateLat(PropagatorField, getName());
+    envCache(Lattice<iScalar<vInteger>>, tName_, 1, envGetGrid(LatticeComplex));
+    envCacheLat(LatticeComplex, momphName_);
+    envTmpLat(LatticeComplex, "coor");
 }
 
 // execution ///////////////////////////////////////////////////////////////////
