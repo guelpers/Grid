@@ -41,11 +41,13 @@ BEGIN_HADRONS_NAMESPACE
  
  Wall source
  -----------------------------
- * src_x = delta(x_3 - tW) * exp(i x.mom)
+ * src_x = theta(x_3 - tA) * theta(tB - x_3) * exp(i x.mom) * exp(energy*t)
  
  * options:
- - tW: source timeslice (integer)
+ - tA: begin timeslice (integer)
+ - tB: end timesilce (integer)
  - mom: momentum insertion, space-separated float sequence (e.g ".1 .2 1. 0.")
+ - energy: for exp(energy*t), (double)
  
  */
 
@@ -58,8 +60,10 @@ class WallPar: Serializable
 {
 public:
     GRID_SERIALIZABLE_CLASS_MEMBERS(WallPar,
-                                    unsigned int, tW,
-                                    std::string, mom);
+                                    unsigned int,   tA,
+                                    unsigned int,   tB,
+                                    std::string, mom,
+				    double, energy);
 };
 
 template <typename FImpl>
@@ -123,14 +127,23 @@ void TWall<FImpl>::setup(void)
     envCache(Lattice<iScalar<vInteger>>, tName_, 1, envGetGrid(LatticeComplex));
     envCacheLat(LatticeComplex, momphName_);
     envTmpLat(LatticeComplex, "coor");
+    envTmpLat(LatticeComplex, "tcoor");
 }
 
 // execution ///////////////////////////////////////////////////////////////////
 template <typename FImpl>
 void TWall<FImpl>::execute(void)
 {    
-    LOG(Message) << "Generating wall source at t = " << par().tW 
+    if (par().tA == par().tB)
+    {
+	LOG(Message) << "Generating wall source at t = " << par().tA
                  << " with momentum " << par().mom << std::endl;
+    }
+    else
+    {
+	LOG(Message) << "Generating wall source for " << par().tA << " <= t <= " << par().tB
+                 << " with momentum " << par().mom << std::endl;
+    }
     
     auto  &src = envGet(PropagatorField, getName());
     auto  &ph  = envGet(LatticeComplex, momphName_);
@@ -154,8 +167,11 @@ void TWall<FImpl>::execute(void)
         hasPhase_ = true;
     }
 
+    envGetTmp(LatticeComplex, tcoor);
+    LatticeCoordinate(tcoor, Tp);
+
     src = 1.;
-    src = where((t == par().tW), src*ph, 0.*src);
+    src = where((t >= par().tA) and (t <= par().tB), src*ph*exp(tcoor*par().energy), 0.*src);
 }
 
 END_MODULE_NAMESPACE

@@ -4,6 +4,7 @@
 #include <Hadrons/Modules/MContraction/Meson.hpp>
 #include <Hadrons/Modules/MContraction/WeakHamiltonian.hpp>
 #include <Hadrons/Modules/MContraction/WeakHamiltonianNonEye.hpp>
+#include <Hadrons/Modules/MContraction/WeakMesonDecayKl2.hpp>
 #include <Hadrons/Modules/MContraction/DiscLoop.hpp>
 #include <Hadrons/Modules/MContraction/WeakNeutral4ptDisc.hpp>
 #include <Hadrons/Modules/MContraction/Gamma3pt.hpp>
