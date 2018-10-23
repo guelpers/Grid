@@ -174,14 +174,14 @@ void TWeakMesonDecayKl2<FImpl>::execute(void)
     }
 
 
-    for (unsigned int i = 0; i < 3; ++i)
+    for (unsigned int mu = 0; mu < 4; ++mu)
     {
 	c = zero;
 	//hadronic part: trace(q1*adj(q2)*g5*gL[mu]) 
-	c   = trace(MAKE_CW_SUBDIAG(q1, q2, GammaL(Gamma::gmu[i])));
+	c   = trace(MAKE_CW_SUBDIAG(q1, q2, GammaL(Gamma::gmu[mu])));
     	prop_buf = 1.;
 	//multiply lepton part
-	res += c * prop_buf * GammaL(Gamma::gmu[i]) * lepton;
+	res += c * prop_buf * GammaL(Gamma::gmu[mu]) * lepton;
     }
 
     //loop over spinor index of lepton part
