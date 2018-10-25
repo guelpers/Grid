@@ -18,6 +18,7 @@
 #include <Hadrons/Modules/MSource/Wall.hpp>
 #include <Hadrons/Modules/MSource/Z2.hpp>
 #include <Hadrons/Modules/MSource/SeqConserved.hpp>
+#include <Hadrons/Modules/MSource/Momentum.hpp>
 #include <Hadrons/Modules/MSink/Smear.hpp>
 #include <Hadrons/Modules/MSink/Point.hpp>
 #include <Hadrons/Modules/MSolver/MixedPrecisionRBPrecCG.hpp>
@@ -29,9 +30,11 @@
 #include <Hadrons/Modules/MGauge/StoutSmearing.hpp>
 #include <Hadrons/Modules/MGauge/Unit.hpp>
 #include <Hadrons/Modules/MGauge/Random.hpp>
+#include <Hadrons/Modules/MGauge/GaugeFix.hpp>
 #include <Hadrons/Modules/MGauge/FundtoHirep.hpp>
 #include <Hadrons/Modules/MGauge/StochEm.hpp>
 #include <Hadrons/Modules/MNoise/TimeDilutedSpinColorDiagonal.hpp>
+#include <Hadrons/Modules/MNoise/FullVolumeSpinColorDiagonal.hpp>
 #include <Hadrons/Modules/MUtilities/PrecisionCast.hpp>
 #include <Hadrons/Modules/MUtilities/RandomVectors.hpp>
 #include <Hadrons/Modules/MUtilities/TestSeqGamma.hpp>
@@ -42,6 +45,9 @@
 #include <Hadrons/Modules/MScalar/ScalarVP.hpp>
 #include <Hadrons/Modules/MScalar/Scalar.hpp>
 #include <Hadrons/Modules/MScalar/ChargedProp.hpp>
+#include <Hadrons/Modules/MNPR/Bilinear.hpp>
+#include <Hadrons/Modules/MNPR/Amputate.hpp>
+#include <Hadrons/Modules/MNPR/FourQuark.hpp>
 #include <Hadrons/Modules/MAction/DWF.hpp>
 #include <Hadrons/Modules/MAction/MobiusDWF.hpp>
 #include <Hadrons/Modules/MAction/Wilson.hpp>
@@ -52,7 +58,6 @@
 #include <Hadrons/Modules/MScalarSUN/TwoPointNPR.hpp>
 #include <Hadrons/Modules/MScalarSUN/ShiftProbe.hpp>
 #include <Hadrons/Modules/MScalarSUN/Div.hpp>
-#include <Hadrons/Modules/MScalarSUN/TimeMomProbe.hpp>
 #include <Hadrons/Modules/MScalarSUN/TrMag.hpp>
 #include <Hadrons/Modules/MScalarSUN/EMT.hpp>
 #include <Hadrons/Modules/MScalarSUN/TwoPoint.hpp>
@@ -63,6 +68,7 @@
 #include <Hadrons/Modules/MScalarSUN/TrKinetic.hpp>
 #include <Hadrons/Modules/MIO/LoadEigenPack.hpp>
 #include <Hadrons/Modules/MIO/LoadNersc.hpp>
+#include <Hadrons/Modules/MIO/LoadA2AVectors.hpp>
 #include <Hadrons/Modules/MIO/LoadCosmHol.hpp>
 #include <Hadrons/Modules/MIO/LoadCoarseEigenPack.hpp>
 #include <Hadrons/Modules/MIO/LoadBinary.hpp>

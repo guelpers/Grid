@@ -12,6 +12,7 @@ modules_cc =\
   Modules/MContraction/Gamma3pt.cc \
   Modules/MFermion/FreeProp.cc \
   Modules/MFermion/GaugeProp.cc \
+  Modules/MSource/Momentum.cc \
   Modules/MSource/Point.cc \
   Modules/MSource/Wall.cc \
   Modules/MSource/SeqConserved.cc \
@@ -30,7 +31,9 @@ modules_cc =\
   Modules/MGauge/StochEm.cc \
   Modules/MGauge/Random.cc \
   Modules/MGauge/FundtoHirep.cc \
+  Modules/MGauge/GaugeFix.cc \
   Modules/MNoise/TimeDilutedSpinColorDiagonal.cc \
+  Modules/MNoise/FullVolumeSpinColorDiagonal.cc \
   Modules/MUtilities/RandomVectors.cc \
   Modules/MUtilities/TestSeqGamma.cc \
   Modules/MUtilities/PrecisionCast.cc \
@@ -40,6 +43,9 @@ modules_cc =\
   Modules/MScalar/VPCounterTerms.cc \
   Modules/MScalar/ChargedProp.cc \
   Modules/MScalar/ScalarVP.cc \
+  Modules/MNPR/Amputate.cc \
+  Modules/MNPR/Bilinear.cc \
+  Modules/MNPR/FourQuark.cc \
   Modules/MAction/Wilson.cc \
   Modules/MAction/MobiusDWF.cc \
   Modules/MAction/ZMobiusDWF.cc \
@@ -48,7 +54,6 @@ modules_cc =\
   Modules/MAction/ScaledDWF.cc \
   Modules/MScalarSUN/TrPhi.cc \
   Modules/MScalarSUN/Grad.cc \
-  Modules/MScalarSUN/TimeMomProbe.cc \
   Modules/MScalarSUN/TrMag.cc \
   Modules/MScalarSUN/TrKinetic.cc \
   Modules/MScalarSUN/EMT.cc \
@@ -62,7 +67,8 @@ modules_cc =\
   Modules/MIO/LoadBinary.cc \
   Modules/MIO/LoadNersc.cc \
   Modules/MIO/LoadCoarseEigenPack.cc \
-  Modules/MIO/LoadCosmHol.cc
+  Modules/MIO/LoadCosmHol.cc \
+  Modules/MIO/LoadA2AVectors.cc
 
 modules_hpp =\
   Modules/MContraction/Baryon.hpp \
@@ -85,6 +91,7 @@ modules_hpp =\
   Modules/MSource/Wall.hpp \
   Modules/MSource/Z2.hpp \
   Modules/MSource/SeqConserved.hpp \
+  Modules/MSource/Momentum.hpp \
   Modules/MSink/Smear.hpp \
   Modules/MSink/Point.hpp \
   Modules/MSolver/MixedPrecisionRBPrecCG.hpp \
@@ -96,9 +103,11 @@ modules_hpp =\
   Modules/MGauge/StoutSmearing.hpp \
   Modules/MGauge/Unit.hpp \
   Modules/MGauge/Random.hpp \
+  Modules/MGauge/GaugeFix.hpp \
   Modules/MGauge/FundtoHirep.hpp \
   Modules/MGauge/StochEm.hpp \
   Modules/MNoise/TimeDilutedSpinColorDiagonal.hpp \
+  Modules/MNoise/FullVolumeSpinColorDiagonal.hpp \
   Modules/MUtilities/PrecisionCast.hpp \
   Modules/MUtilities/RandomVectors.hpp \
   Modules/MUtilities/TestSeqGamma.hpp \
@@ -109,6 +118,9 @@ modules_hpp =\
   Modules/MScalar/ScalarVP.hpp \
   Modules/MScalar/Scalar.hpp \
   Modules/MScalar/ChargedProp.hpp \
+  Modules/MNPR/Bilinear.hpp \
+  Modules/MNPR/Amputate.hpp \
+  Modules/MNPR/FourQuark.hpp \
   Modules/MAction/DWF.hpp \
   Modules/MAction/MobiusDWF.hpp \
   Modules/MAction/Wilson.hpp \
@@ -119,7 +131,6 @@ modules_hpp =\
   Modules/MScalarSUN/TwoPointNPR.hpp \
   Modules/MScalarSUN/ShiftProbe.hpp \
   Modules/MScalarSUN/Div.hpp \
-  Modules/MScalarSUN/TimeMomProbe.hpp \
   Modules/MScalarSUN/TrMag.hpp \
   Modules/MScalarSUN/EMT.hpp \
   Modules/MScalarSUN/TwoPoint.hpp \
@@ -130,6 +141,7 @@ modules_hpp =\
   Modules/MScalarSUN/TrKinetic.hpp \
   Modules/MIO/LoadEigenPack.hpp \
   Modules/MIO/LoadNersc.hpp \
+  Modules/MIO/LoadA2AVectors.hpp \
   Modules/MIO/LoadCosmHol.hpp \
   Modules/MIO/LoadCoarseEigenPack.hpp \
   Modules/MIO/LoadBinary.hpp
