@@ -41,13 +41,13 @@ BEGIN_HADRONS_NAMESPACE
  
  Sequential source
  -----------------------------
- * src_x = q_x * theta(x_3 - tA) * theta(tB - x_3) * A_mu g_mu * exp(i x.mom)
+ * src_x = q_x * theta(x_3 - tA) * theta(tB - x_3) * i * A_mu g_mu * exp(i x.mom)
  
  * options:
  - q: input propagator (string)
  - tA: begin timeslice (integer)
  - tB: end timesilce (integer)
- - photon: input photon field (string)
+ - emField: input photon field (string)
  - mom: momentum insertion, space-separated float sequence (e.g ".1 .2 1. 0.")
  
  */
@@ -64,7 +64,7 @@ public:
                                     std::string,    q,
                                     unsigned int,   tA,
                                     unsigned int,   tB,
-                                    std::string,    photon,
+                                    std::string,    emField,
                                     std::string,    mom);
 };
 
@@ -110,7 +110,7 @@ TSeqAslash<FImpl>::TSeqAslash(const std::string name)
 template <typename FImpl>
 std::vector<std::string> TSeqAslash<FImpl>::getInput(void)
 {
-    std::vector<std::string> in = {par().q,par().photon};
+    std::vector<std::string> in = {par().q,par().emField};
     
     return in;
 }
@@ -140,13 +140,13 @@ void TSeqAslash<FImpl>::execute(void)
     if (par().tA == par().tB)
     {
         LOG(Message) << "Generating Aslash sequential source at t= " << par().tA 
-		     << " using the photon field " << par().photon << std::endl; 
+		     << " using the photon field " << par().emField << std::endl; 
     }
     else
     {
         LOG(Message) << "Generating Aslash sequential source for "
                      << par().tA << " <= t <= " << par().tB 
-		     << " using the photon field " << par().photon << std::endl;
+		     << " using the photon field " << par().emField << std::endl;
     }
     auto  &src = envGet(PropagatorField, getName()); src=zero;
     auto  &q   = envGet(PropagatorField, par().q);
@@ -170,11 +170,12 @@ void TSeqAslash<FImpl>::execute(void)
         LatticeCoordinate(t, Tp);
         hasPhase_ = true;
     }
-    auto &stoch_photon = envGet(EmField,  par().photon);
+    auto &stoch_photon = envGet(EmField,  par().emField);
+    Complex ci(0.0,1.0);
     for(unsigned int mu=0;mu<=3;mu++)
     {
 	Gamma gmu(Gamma::gmu[mu]);
-	src = src + where((t >= par().tA) and (t <= par().tB), PeekIndex<LorentzIndex>(stoch_photon, mu) *ph*(gmu*q), 0.*q);
+	src = src + where((t >= par().tA) and (t <= par().tB), ci * PeekIndex<LorentzIndex>(stoch_photon, mu) *ph*(gmu*q), 0.*q);
     }
 }
 

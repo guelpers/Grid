@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
         seqKl2Par.q         = "wall";
         seqKl2Par.tA        = 0;
         seqKl2Par.tB        = nt-1;
-        seqKl2Par.photon    = "ph_field";
+        seqKl2Par.emField    = "ph_field";
         seqKl2Par.mom       = "0. 0. 0. 0.";
         application.createModule<MSource::SeqAslash>("lVA" + lepton_flavour[i], seqKl2Par);
 
@@ -175,7 +175,7 @@ int main(int argc, char *argv[])
         seqPar.q         = "Qpt_" + flavour[i];
         seqPar.tA        = 0;
         seqPar.tB        = nt-1;
-        seqPar.photon    = "ph_field";
+        seqPar.emField    = "ph_field";
         seqPar.mom       = "0. 0. 0. 0.";
         application.createModule<MSource::SeqAslash>("Qpt_" + flavour[i] 
 						    + "_seq_lV_ph", seqPar);

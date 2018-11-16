@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
         seqPar_lV.q         = "Qpt_" + flavour[i];
         seqPar_lV.tA        = 0;
         seqPar_lV.tB        = nt-1;
-        seqPar_lV.photon    = "ph_field";
+        seqPar_lV.emField    = "ph_field";
         seqPar_lV.mom       = "0. 0. 0. 0.";
         application.createModule<MSource::SeqAslash>("Qpt_" + flavour[i] 
 						    + "_seq_lV_ph", seqPar_lV);
@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
         seqPar_lVlV.tA        = 0;
         seqPar_lVlV.tB        = nt-1;
         seqPar_lVlV.mom       = "0. 0. 0. 0.";
-	seqPar_lVlV.photon    = "ph_field";
+	seqPar_lVlV.emField    = "ph_field";
         application.createModule<MSource::SeqAslash>("Qpt_" + flavour[i] 
 						+ "_seq_lV_ph" + flavour[i] 
 						+ "_seq_lV_ph", seqPar_lVlV);
