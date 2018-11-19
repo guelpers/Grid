@@ -6,6 +6,7 @@ modules_cc =\
   Modules/MContraction/WeakHamiltonianNonEye.cc \
   Modules/MContraction/WeakMesonDecayKl2.cc \
   Modules/MContraction/A2AAslashField.cc \
+  Modules/MContraction/A2ALeptonField.cc \
   Modules/MContraction/WardIdentity.cc \
   Modules/MContraction/A2AMesonField.cc \
   Modules/MContraction/DiscLoop.cc \
@@ -73,6 +74,7 @@ modules_cc =\
 modules_hpp =\
   Modules/MContraction/Baryon.hpp \
   Modules/MContraction/A2AAslashField.hpp \
+  Modules/MContraction/A2ALeptonField.hpp \
   Modules/MContraction/A2AMesonField.hpp \
   Modules/MContraction/Meson.hpp \
   Modules/MContraction/WeakHamiltonian.hpp \
