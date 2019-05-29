@@ -12,6 +12,7 @@ modules_cc =\
   Modules/MFermion/FreeProp.cc \
   Modules/MFermion/GaugeProp.cc \
   Modules/MFermion/EMLepton.cc \
+  Modules/MFermion/EMLeptonwall.cc \
   Modules/MSource/Momentum.cc \
   Modules/MSource/Point.cc \
   Modules/MSource/Wall.cc \
@@ -80,6 +81,7 @@ modules_hpp =\
   Modules/MFermion/FreeProp.hpp \
   Modules/MFermion/GaugeProp.hpp \
   Modules/MFermion/EMLepton.hpp \
+  Modules/MFermion/EMLeptonwall.hpp \
   Modules/MSource/SeqGamma.hpp \
   Modules/MSource/SeqAslash.hpp \
   Modules/MSource/Point.hpp \
